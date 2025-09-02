@@ -6,4 +6,5 @@ mia_dbt:
       path: mia_dbt.duckdb
       extensions:
         - httpfs
+      threads: 1
       
