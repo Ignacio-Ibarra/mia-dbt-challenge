@@ -1,0 +1,9 @@
+mia_dbt:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: mia_dbt.duckdb
+      extensions:
+        - httpfs
+      
