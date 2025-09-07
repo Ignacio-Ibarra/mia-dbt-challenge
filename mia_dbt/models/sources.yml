@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: raw_data
+    description: Datos brutos de mercados de TV y radio de Latinoamérica.
+    database: mia_dbt
+
+    tables:
+      - name: brasil
+        description: Datos históricos de spots de TV y radio de Brasil.
+
+      - name: mexico
+        description: Datos históricos de spots de TV y radio de México.
+
+
+      

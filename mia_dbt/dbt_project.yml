@@ -1,0 +1,29 @@
+name: 'mia_dbt'
+version: '1.0.0'
+config-version: 2
+
+profile: 'mia_dbt'
+
+model-paths: ["models"]
+macro-paths: ["macros"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+
+# Configuring models
+models:
+  mia_dbt:
+    staging:
+      +materialized: view
+    intermediate:
+      +materialized: view
+    marts:
+      +materialized: view
+
+# Configuring tests
+tests:
+  mia_dbt:
+    +store_failures: true
+    +severity: warn 

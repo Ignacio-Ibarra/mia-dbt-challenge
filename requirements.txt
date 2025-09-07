@@ -3,3 +3,4 @@ python-dotenv
 dbt-duckdb
 requests
 python-dotenv
+pandas
