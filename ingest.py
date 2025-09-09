@@ -4,8 +4,9 @@ from duckdb import DuckDBPyConnection
 import duckdb
 import yaml
 import os
+import glob
 
-
+PROJECT_NAME = "mia_dbt"
 
 def get_profile_config(project:str) -> dict:
     with open('profiles.yml', "r") as f:
@@ -50,35 +51,80 @@ class Ingest:
                 url = f"https://drive.google.com/uc?id={file_id}&export=download"
                 self.process(table, url, date)
     
-
+def get_local_files():
+    """
+    Obtiene archivos locales de la carpeta raw_data
+    """
+    raw_data_path = "./raw_data"
+    if not os.path.exists(raw_data_path):
+        print(f"La carpeta {raw_data_path} no existe")
+        return {}
+    
+    # Buscar archivos CSV que coincidan con el patrón
+    pattern = os.path.join(raw_data_path, "mercado_*.csv")
+    csv_files = glob.glob(pattern)
+    
+    files = {}
+    for file_path in csv_files:
+        filename = os.path.basename(file_path)
+        # Extraer país y fecha del nombre del archivo
+        # Formato esperado: mercado_brasil_20240831.csv o mercado_mexico_20240830.csv
+        try:
+            parts = filename.replace('.csv', '').split('_')
+            if len(parts) >= 3:
+                country = parts[1]  # brasil o mexico
+                date = parts[2]     # 20240831
+                
+                if country not in files:
+                    files[country] = []
+                
+                files[country].append({
+                    'id': file_path,  # Usamos la ruta local como ID
+                    'date': date,
+                    'path': file_path
+                })
+        except Exception as e:
+            print(f"Error procesando archivo {filename}: {e}")
+    
+    return files
 
 def main():
-
-    load_dotenv()
-
-    GOOGLE_DRIVE_FOLDER_ID = os.getenv("GOOGLE_DRIVE_FOLDER_ID")
-
-    GOOGLE_DRIVE_API_KEY = os.getenv("GOOGLE_DRIVE_API_KEY")
-
-    PROJECT_NAME = os.getenv("PROJECT_NAME")
-
-    folder_files = get_folder_files(folder_id = GOOGLE_DRIVE_FOLDER_ID, api_key=GOOGLE_DRIVE_API_KEY)
-
-    files = parse_filenames(folder_files)
-
+    
+    env_exists = os.path.exists('.env')
+    
+    if env_exists:
+        print("Archivo .env encontrado, usando Google Drive...")
+        load_dotenv()
+        
+        GOOGLE_DRIVE_FOLDER_ID = os.getenv("GOOGLE_DRIVE_FOLDER_ID")
+        GOOGLE_DRIVE_API_KEY = os.getenv("GOOGLE_DRIVE_API_KEY")
+        
+        if not all([GOOGLE_DRIVE_FOLDER_ID, GOOGLE_DRIVE_API_KEY, PROJECT_NAME]):
+            print("Variables de entorno faltantes, cambiando a archivos locales...")
+            files = get_local_files()
+        else:
+            folder_files = get_folder_files(folder_id=GOOGLE_DRIVE_FOLDER_ID, api_key=GOOGLE_DRIVE_API_KEY)
+            files = parse_filenames(folder_files)
+    else:
+        print("Archivo .env no encontrado, usando archivos locales...")
+        files = get_local_files()
+    
+    if not files:
+        print("No se encontraron archivos para procesar")
+        return
+    
+    print(f"Archivos encontrados: {files}")
+    
     config = get_profile_config(project=PROJECT_NAME)
-
-    duckdb_path = config.get('outputs', {}) \
-                   .get('dev', {}) \
-                   .get('path')
+    
+    duckdb_path = config.get('outputs', {}).get('dev', {}).get('path')
     path = f"{PROJECT_NAME}/{duckdb_path}"
     conn = duckdb.connect(database=path)
     print(f"Connected to local DuckDB database in: {path}")
-
+    
     ingestion = Ingest(files, conn)
-
     ingestion.process_all()
-
+    
     print("Ingestion completed")
     conn.close()
 
