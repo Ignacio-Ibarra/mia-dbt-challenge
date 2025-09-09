@@ -113,9 +113,7 @@ def main():
     
     if not files:
         print("No se encontraron archivos para procesar")
-        return
-    
-    print(f"Archivos encontrados: {files}")
+        raise Exception("No se encontraron archivos para procesar")
     
     config = get_profile_config(project=PROJECT_NAME)
     
