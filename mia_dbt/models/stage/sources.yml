@@ -4,6 +4,7 @@ sources:
   - name: raw_data
     description: Datos brutos de mercados de TV y radio de Latinoamérica.
     database: mia_dbt
+    schema: main
 
     tables:
       - name: brasil
