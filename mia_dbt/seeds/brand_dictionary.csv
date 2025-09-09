@@ -1,0 +1,11 @@
+marca_original,marca_normalizada,pais,descripcion
+PLAYGOOD,PLAY-GOOD,AMBOS,Separación de palabras compuestas
+SPORTFLIX,$PORTFLIX,AMBOS,Reemplazo de S por $ según requerimiento
+BETACTION,BET ACTION,BRASIL,Separación de palabras en marcas de apuestas
+MEGAGAME,MEGA GAME,BRASIL,Separación de palabras compuestas
+LUCKYLINE,LUCKY LINE,BRASIL,Separación de palabras compuestas
+SEVENWAGERS,SEVEN WAGERS,BRASIL,Separación de palabras compuestas
+WINSHARK,WIN SHARK,BRASIL,Separación de palabras compuestas
+NEOWIN,NEO WIN,BRASIL,Separación de palabras compuestas
+BET4FUN,BET 4 FUN,BRASIL,Separación de palabras y números
+WINNERX,WINNER X,BRASIL,Separación de palabras compuestas

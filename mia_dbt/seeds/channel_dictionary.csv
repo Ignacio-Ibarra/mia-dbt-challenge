@@ -1,0 +1,11 @@
+canal_original,canal_normalizado,pais,descripcion
+ESPN2,ESPN 2,AMBOS,Separación de número en ESPN
+ESPN DOS,ESPN 2,AMBOS,Traducción de número en ESPN
+RADIO FORMULA (2A. CADENA),RADIO FÓRMULA 2A,AMBOS,Normalización de formato
+RADIO FORMULA 2A,RADIO FÓRMULA 2A,AMBOS,Normalización de formato
+RADIO FORMULA 2A CADENA,RADIO FÓRMULA 2A,AMBOS,Normalización de formato
+GLOBO,GLOBO,BRASIL,Canal principal de Brasil
+RECORD,RECORD,BRASIL,Canal principal de Brasil
+SBT,SBT,BRASIL,Canal principal de Brasil
+BAND,BAND,BRASIL,Canal principal de Brasil
+REDE TV,REDE TV,BRASIL,Canal principal de Brasil

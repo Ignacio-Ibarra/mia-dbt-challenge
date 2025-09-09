@@ -19,6 +19,14 @@ models:
       +materialized: table
     intermediate:
       +materialized: view
+
+seeds:
+  mia_dbt:
+    +schema: main
+    +file_format: csv
+    +quote_policy: 'all'
+    +delimiter: ','
+    +header: true
     
 
 # Configuring tests
