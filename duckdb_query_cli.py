@@ -9,7 +9,7 @@ while True:
         if q.strip().lower() in ["exit", "quit"]:
             break
         
-        with duckdb.connect("mia_dbt.duckdb") as con:
+        with duckdb.connect("mia_dbt/mia_dbt.duckdb") as con:
             df = con.sql(q).df()
         
         
