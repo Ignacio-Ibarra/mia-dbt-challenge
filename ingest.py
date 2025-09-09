@@ -63,6 +63,8 @@ def get_local_files():
     # Buscar archivos CSV que coincidan con el patrón
     pattern = os.path.join(raw_data_path, "mercado_*.csv")
     csv_files = glob.glob(pattern)
+    if len(csv_files) == 0:
+        raise Exception("No se encontraron archivos en la carpeta raw_data, por favor descargue los archivos y guardelos en la carpeta '~/raw_data'")
     
     files = {}
     for file_path in csv_files:
