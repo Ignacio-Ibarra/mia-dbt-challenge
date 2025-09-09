@@ -15,12 +15,11 @@ clean-targets:
 # Configuring models
 models:
   mia_dbt:
-    staging:
-      +materialized: view
+    stage:
+      +materialized: table
     intermediate:
       +materialized: view
-    marts:
-      +materialized: view
+    
 
 # Configuring tests
 tests:
