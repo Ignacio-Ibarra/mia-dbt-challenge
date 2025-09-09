@@ -8,3 +8,7 @@ __pycache__/
 */__pycache__/
 .vscode/
 .env
+*.html
+bitacora.md
+*/target/
+
