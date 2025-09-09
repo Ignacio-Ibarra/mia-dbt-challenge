@@ -1,8 +1,8 @@
-{{ config(materialized='view') }}
+{{ config(materialized='table') }}
 
 with raw as (
     select
-        {{ normalize_all_columns('brasil') }}
+        {{ normalize_all_columns(source('raw_data', 'brasil')) }}
     from {{ source('raw_data', 'brasil') }}
 )
 
