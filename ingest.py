@@ -71,13 +71,15 @@ def main():
     duckdb_path = config.get('outputs', {}) \
                    .get('dev', {}) \
                    .get('path')
-
-    conn = duckdb.connect(database=duckdb_path)
+    path = f"{PROJECT_NAME}/{duckdb_path}"
+    conn = duckdb.connect(database=path)
+    print(f"Connected to local DuckDB database in: {path}")
 
     ingestion = Ingest(files, conn)
 
     ingestion.process_all()
 
+    print("Ingestion completed")
     conn.close()
 
 
