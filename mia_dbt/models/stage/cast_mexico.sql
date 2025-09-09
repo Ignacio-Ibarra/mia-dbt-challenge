@@ -5,7 +5,11 @@ with data_cast as (
 
 SELECT 
     CAST(STRPTIME(hora_gmt, '%Y-%m-%d %H:%M:%S %z') AS DATE) AS fecha,
-    CAST(STRPTIME(hora_gmt, '%Y-%m-%d %H:%M:%S %z') AS TIME) AS hora,
+    MAKE_TIME(
+    EXTRACT(HOUR FROM STRPTIME(hora_gmt, '%Y-%m-%d %H:%M:%S %z')),
+    EXTRACT(MINUTE FROM STRPTIME(hora_gmt, '%Y-%m-%d %H:%M:%S %z')),
+    EXTRACT(SECOND FROM STRPTIME(hora_gmt, '%Y-%m-%d %H:%M:%S %z'))
+    ) AS hora,
     STRPTIME(file_date, '%Y%m%d') AS fecha_file,
     'mexico' as pais,
     *
