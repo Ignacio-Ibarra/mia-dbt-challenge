@@ -1,5 +1,11 @@
 -- mia_dbt/models/marts/mart_spots_analysis.sql
-{{ config(materialized='table') }}
+{{
+  config(
+    materialized='table',
+    post_hook = [
+        "{{ export_csv(this, 'mart_spots_analysis') }}"
+    ]
+) }}
 
 /*
     Tabla final de negocio para análisis de spots de TV y Radio
