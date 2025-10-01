@@ -45,7 +45,7 @@ WITH mexico_spots AS (
         -- Dimensiones de marca y producto
         marca AS marca_original,
         producto,
-        version AS version_original,
+        "version" AS version_original,
         
         -- Métricas de duración y costo
         duracion_programada AS duracion_segundos,
